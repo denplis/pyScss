@@ -746,8 +746,7 @@ class Scss(object):
 
         self.clean()
 
-    #@profile
-    @print_timing(2)
+
     def Compilation(self, scss_string=None, scss_file=None):
         if scss_string is not None:
             self._scss_files = {'<string>': scss_string}
@@ -778,7 +777,8 @@ class Scss(object):
         final_cont = ''
         for fileid in self.css_files:
             if fileid != '<string>':
-                final_cont += '/* Generated from: ' + fileid + ' */\n'
+                if self.scss_opts['debug_info']:
+                    final_cont += '/* Generated from: ' + fileid + ' */\n'
             fcont = self.create_css(fileid)
             final_cont += fcont
 
